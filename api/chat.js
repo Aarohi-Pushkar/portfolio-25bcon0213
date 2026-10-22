@@ -97,7 +97,13 @@ module.exports = async function handler(req, res) {
 
   try {
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
+      if (!response.ok) {
+  // Do not relay provider responses: they can contain details not intended for visitors.
+  console.error("Gemini request failed with status", response.status);
+  return sendJson(res, 502, {
+    error: "The assistant is temporarily unavailable. Please try again in a moment.",
+  });
+}
       {
         method: "POST",
         headers: {
