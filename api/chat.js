@@ -48,7 +48,7 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 405, { error: "Use POST to send a chat message." });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return sendJson(res, 503, {
       error: "The assistant is not configured yet. Please try again later.",
@@ -96,63 +96,52 @@ module.exports = async function handler(req, res) {
   const timeout = setTimeout(() => controller.abort(), 20000);
 
   try {
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: PORTFOLIO_CONTEXT }],
-          },
-          contents,
-          generationConfig: {
-            temperature: 0.2,
-            maxOutputTokens: 350,
-          },
-        }),
-        signal: controller.signal,
-      }
-    );
+    
+const response = await fetch(
+  "https://api.groq.com/openai/v1/chat/completions",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "openai/gpt-oss-20b",
+      messages: [
+        { role: "system", content: PORTFOLIO_CONTEXT },
+        ...contents.map((message) => ({
+          role: message.role === "model" ? "assistant" : "user",
+          content: message.parts.map((part) => part.text).join(""),
+        })),
+      ],
+      temperature: 0.2,
+      max_completion_tokens: 350,
+    }),
+    signal: controller.signal,
+  }
+);
 
-    if (response.status === 429) {
-      return sendJson(res, 429, {
-        error: "The assistant is receiving too many questions. Please try again shortly.",
-      });
-    }
-    if (!response.ok) {
+if (!response.ok) {
   const errorDetails = await response.text();
-
-  console.error(
-    "Gemini API error:",
-    response.status,
-    errorDetails.slice(0, 1000)
-  );
-
+  console.error("Groq API error:", response.status, errorDetails.slice(0, 1000));
   return sendJson(res, 502, {
-    error: "The assistant is temporarily unavailable. Please try again in a moment.",
+    error: "The assistant is temporarily unavailable. Please try again.",
   });
 }
 
-    const data = await response.json();
-    const reply = data?.candidates?.[0]?.content?.parts
-      ?.map((part) => part.text || "")
-      .join("")
-      .trim();
+const data = await response.json();
+const reply = data?.choices?.[0]?.message?.content?.trim();
 
-    if (!reply) {
-      return sendJson(res, 502, {
-        error: "The assistant couldn't prepare a reply. Please try again.",
-      });
-    }
+if (!reply) {
+  return sendJson(res, 502, {
+    error: "The assistant couldn't prepare a reply. Please try again.",
+  });
+}
 
-    return sendJson(res, 200, { reply });
+return sendJson(res, 200, { reply });
   } catch (error) {
     const timedOut = error && error.name === "AbortError";
-    console.error(timedOut ? "Gemini request timed out" : "Gemini request failed");
+    console.error(timedOut ? "Groq request timed out" : "Groq request failed");
     return sendJson(res, 502, {
       error: timedOut
         ? "The assistant took too long to respond. Please try again."
