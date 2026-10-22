@@ -124,12 +124,18 @@ module.exports = async function handler(req, res) {
       });
     }
     if (!response.ok) {
-      // Do not relay provider responses: they can contain details not intended for visitors.
-      console.error("Gemini request failed with status", response.status);
-      return sendJson(res, 502, {
-        error: "The assistant is temporarily unavailable. Please try again in a moment.",
-      });
-    }
+  const errorDetails = await response.text();
+
+  console.error(
+    "Gemini API error:",
+    response.status,
+    errorDetails.slice(0, 1000)
+  );
+
+  return sendJson(res, 502, {
+    error: "The assistant is temporarily unavailable. Please try again in a moment.",
+  });
+}
 
     const data = await response.json();
     const reply = data?.candidates?.[0]?.content?.parts
