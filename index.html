@@ -196,6 +196,77 @@
       </p>
     </footer>
 
+    <div class="portfolio-chat">
+      <button
+        class="chat-launcher"
+        id="chat-launcher"
+        type="button"
+        aria-label="Ask about Yuvraj's portfolio"
+        aria-expanded="false"
+        aria-controls="portfolio-chat-window"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.8-3.2A7.5 7.5 0 1 1 20 11.5Z" />
+          <path d="M8.5 11.5h7M8.5 14.5h4" />
+        </svg>
+      </button>
+
+      <section
+        class="chat-window"
+        id="portfolio-chat-window"
+        aria-labelledby="chat-title"
+        hidden
+      >
+        <header class="chat-header">
+          <div>
+            <h2 id="chat-title">Portfolio assistant</h2>
+            <p>Ask me about Yuvraj, his skills, or projects.</p>
+          </div>
+          <button
+            class="chat-close"
+            id="chat-close"
+            type="button"
+            aria-label="Close chat"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </header>
+
+        <div
+          class="chat-messages"
+          id="chat-messages"
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions text"
+        >
+          <p class="chat-message assistant-message">
+            Hi! Ask me about Yuvraj’s background, skills, or any of his five
+            projects.
+          </p>
+        </div>
+
+        <form class="chat-form" id="chat-form">
+          <label class="visually-hidden" for="chat-input">Your question</label>
+          <input
+            id="chat-input"
+            name="message"
+            type="text"
+            maxlength="1000"
+            placeholder="Ask a question…"
+            autocomplete="off"
+            required
+          />
+          <button id="chat-send" type="submit" aria-label="Send message">
+            Send
+          </button>
+        </form>
+        <p class="chat-error" id="chat-error" role="status" hidden></p>
+      </section>
+    </div>
+
     <script src="script.js"></script>
+    <script src="chat-widget.js"></script>
   </body>
 </html>
