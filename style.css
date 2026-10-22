@@ -1,0 +1,273 @@
+:root {
+  --bg: #f6f1e8;
+  --surface: #fffaf2;
+  --ink: #1c1914;
+  --muted: #5c564c;
+  --accent: #b45309;
+  --accent-hover: #92400e;
+  --border: #e2d6c4;
+  --shadow: 0 12px 32px rgba(28, 25, 20, 0.08);
+  --radius: 14px;
+  --max: 44rem;
+}
+
+[data-theme="dark"] {
+  --bg: #161410;
+  --surface: #221e19;
+  --ink: #f4efe6;
+  --muted: #c4b8a6;
+  --accent: #f59e0b;
+  --accent-hover: #fbbf24;
+  --border: #3a342c;
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.4rem;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--accent-hover);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.brand {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+
+#theme-toggle {
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+#theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+h1,
+h2 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 0.5rem;
+}
+
+.tagline {
+  margin: 0 0 2.25rem;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+
+section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.35rem 1.5rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+}
+
+.headline {
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.skill-groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.skill-groups > li h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.skill-groups ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.skill-groups li + li {
+  margin-top: 0.2rem;
+}
+
+.project-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.project-card {
+  padding: 1rem 1.1rem 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--bg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.project-card h3 {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.project-card p {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  margin-top: 0.75rem;
+  font-family: system-ui, sans-serif;
+}
+
+.project-links a {
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+@media (min-width: 720px) {
+  .skill-groups {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-list .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1.25rem 1.5rem 2rem;
+  color: var(--muted);
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    position: static;
+  }
+}
