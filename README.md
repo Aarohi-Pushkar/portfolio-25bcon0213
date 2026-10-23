@@ -1,5 +1,5 @@
-# portfolio-25bcon0031
-Yuvraj Arora — Portfolio
+# portfolio-25bcon0780
+Adamya mehta — Portfolio
 
 I'm a 2nd-year B.Tech CSE student specializing in Artificial Intelligence and Machine Learning at JECRC University. I'm passionate about machine learning, problem-solving, and software development.
 
