@@ -1,5 +1,5 @@
-# portfolio-25bcon0780
-Adamya mehta — Portfolio
+# portfolio-25bcon0213
+Aarohi Pushkar — Portfolio
 
 I'm a 2nd-year B.Tech CSE student specializing in Artificial Intelligence and Machine Learning at JECRC University. I'm passionate about machine learning, problem-solving, and software development.
 
